@@ -1,4 +1,3 @@
-/* Решение из урока №3 (на основе optional) */
 #include <algorithm>
 #include <cmath>
 #include <iostream>
@@ -53,6 +52,10 @@ struct Document {
     Document(int id, double relevance, int rating)
         : id(id), relevance(relevance), rating(rating) {
     }
+    
+    ~Document(){
+        
+    }
 
     int id = 0;
     double relevance = 0.0;
@@ -96,30 +99,30 @@ public:
 //--------------------------------AddDocument method-------------------------------
     void AddDocument(int document_id, const string& document, DocumentStatus status, const vector<int>& ratings) {
         if(document_id < 0){ // no negative id's
-            throw invalid_argument("Document id can not be negative"); 
+            throw invalid_argument("Document id can not be negative");
         }
         if(documents_.count(document_id) > 0){ // no duplicate
-            throw invalid_argument("You already have a document with the same id"); 
+            throw invalid_argument("You already have a document with the same id");
         }
         // make no stop words vector to check for spec symbol
-        const vector<string> words = SplitIntoWordsNoStop(document); 
+        const vector<string> words = SplitIntoWordsNoStop(document);
         for (const auto& word : words){ // from here spec symbol test
-            if(!IsValidWord(word)){ 
-                throw invalid_argument("Error: you try to add an invalid document"); 
+            if(!IsValidWord(word)){
+                throw invalid_argument("Error: you try to add an invalid document");
             }
         } // to here
         const double inv_word_count = 1.0 / static_cast<double>(words.size());
-        for (const string& word : words) { 
+        for (const string& word : words) {
             word_to_document_freqs_[word][document_id] += inv_word_count;
         }
         documents_.emplace(document_id, DocumentData{ComputeAverageRating(ratings), status});
-        id_list.push_back(document_id);
+        id_list_.push_back(document_id);
     }
 //---------------------------FindTopDocs with predicate-----------------------------
     template <typename DocumentPredicate>
-    vector<Document> FindTopDocuments(const string& raw_query,DocumentPredicate document_predicate) const { 
+    vector<Document> FindTopDocuments(const string& raw_query,DocumentPredicate document_predicate) const {
        if (const auto parsed_query = ParseQuery(raw_query); !parsed_query.has_value()) {
-           throw invalid_argument("You try to search an invalid document"); 
+           throw invalid_argument("You try to search an invalid document");
        } else {
            Query query = parsed_query.value();
            vector<Document> matched_documents = FindAllDocuments(query, document_predicate);
@@ -137,7 +140,7 @@ public:
     }
 
     vector<Document> FindTopDocuments(const string& raw_query, DocumentStatus status) const {
-        if (ParseQuery(raw_query)){ // if query is matched 
+        if (ParseQuery(raw_query)){ // if query is matched
             return FindTopDocuments(raw_query, [status](int document_id, DocumentStatus document_status, int rating) { return document_status == status;});
         }
         throw invalid_argument("You try to search an invalid document");
@@ -151,7 +154,7 @@ public:
     }
 
     int GetDocumentCount() const {
-        return documents_.size();
+        return static_cast<int>(documents_.size());
     }
 
     tuple<vector<string>, DocumentStatus> MatchDocument(const string& raw_query, int document_id) const {
@@ -179,16 +182,16 @@ public:
                 }
             }
         tuple<vector<string>, DocumentStatus> result={matched_words, documents_.at(document_id).status};
-        return result;    
-          }      
+        return result;
+          }
     }
 
-    int GetDocumentId(int index) const { 
-        if ((index > id_list.size()) || (index < 0)) {
+    int GetDocumentId(int index) const {
+        if ((index > id_list_.size()) || (index < 0)) {
             throw out_of_range("Index can not be out of range");
         }
         else
-            return id_list.at(index);
+            return id_list_.at(index);
 
     }
 private:
@@ -201,7 +204,7 @@ private:
     const set<string> stop_words_;
     map<string, map<int, double>> word_to_document_freqs_;
     map<int, DocumentData> documents_;
-    vector<int> id_list;
+    vector<int> id_list_;
     
     bool IsStopWord(const string& word) const {
         return stop_words_.count(word) > 0;
@@ -240,6 +243,9 @@ private:
             is_minus = true;
             text = text.substr(1);
         }
+        if(!IsValidWord(text)){
+            throw invalid_argument("The word is invalid");
+        }
         return {text, is_minus, IsStopWord(text)};
     }
 
@@ -248,15 +254,20 @@ private:
         set<string> minus_words;
     };
 
-    optional<Query> ParseQuery(const string& text ) const {
+    optional<Query> ParseQuery(const string& text) const {
         Query query;
         for (const string& word : SplitIntoWords(text)) {
-            if (!IsValidWord(word)) {return nullopt;}
             const QueryWord query_word = ParseQueryWord(word);
             if (!query_word.is_stop) {
                 if (query_word.is_minus) {
-                    if (query_word.data[0]=='-' || query_word.data[0]=='\0') {return nullopt;}
-                    query.minus_words.insert(query_word.data);
+                    if(!query_word.data.empty()){
+                        if (query_word.data[0]=='-' || query_word.data[0]=='\0') {
+                            throw invalid_argument("There is a minus word here");
+                        }
+                        query.minus_words.insert(query_word.data);
+                    } else {
+                        throw invalid_argument("The word is empty");
+                    }
                 } else {
                     query.plus_words.insert(query_word.data);
                 }
@@ -304,9 +315,14 @@ private:
     }
 
     static bool IsValidWord(const string& word) {
-        return none_of(word.begin(), word.end(), [](char c) { // no one symbol 
+        return none_of(word.begin(), word.end(), [](char c) { // no one symbol
             return c >= '\0' && c < ' ';                   // == special symbol |
         });
     }
 
 };
+
+int main(){
+
+}
+
