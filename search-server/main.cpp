@@ -1,12 +1,5 @@
-#include <algorithm>
-#include <cmath>
-#include <deque>
 #include <iostream>
-#include <map>
-#include <set>
-#include <stdexcept>
 #include <string>
-#include <utility>
 #include <vector>
 
 #include "paginator.h"
