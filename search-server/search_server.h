@@ -50,13 +50,7 @@ public:
         return documents_.size();
     }
 
-    int GetDocumentId(int index)const {
-
-        if (GetDocumentCount() < index || index < 0) {
-            throw std::out_of_range("Wrong id");
-        }
-        return document_ids_.at(index);
-    }
+    int GetDocumentId(int index)const;
 
     template <typename DocumentPredicate>
     std::vector<Document> FindTopDocuments(const std::string& raw_query, DocumentPredicate document_predicate) const;
