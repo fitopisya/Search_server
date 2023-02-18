@@ -139,9 +139,16 @@ int SearchServer::ComputeAverageRating(const std::vector<int>& ratings) {
     return true;
 }
 
-// Existence required
 double SearchServer::ComputeWordInverseDocumentFreq(const std::string& word) const {
     return log(GetDocumentCount() * 1.0 / word_to_document_freqs_.at(word).size());
 }
+
+
+int GetDocumentId(int index) const { 
+    if (GetDocumentCount() < index || index < 0) {
+            throw std::out_of_range("Wrong id");
+        }
+        return document_ids_.at(index);
+    }
 
 
