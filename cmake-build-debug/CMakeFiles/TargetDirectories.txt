@@ -1,0 +1,3 @@
+/Users/fitopisya/Documents/clion_projects/search_server/cmake-build-debug/CMakeFiles/search_server.dir
+/Users/fitopisya/Documents/clion_projects/search_server/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/fitopisya/Documents/clion_projects/search_server/cmake-build-debug/CMakeFiles/rebuild_cache.dir
