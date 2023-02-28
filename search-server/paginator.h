@@ -1,12 +1,17 @@
 #pragma once
 
+#include <vector>
+
+/*
+ * This header is used to paginate documents
+ */
 template <typename Iterator>
 class IteratorRange {
 public:
     IteratorRange(Iterator begin, Iterator end)
-        : first_(begin)
-        , last_(end)
-        , size_(distance(first_, last_)) {
+            : first_(begin)
+            , last_(end)
+            , size_(distance(first_, last_)) {
     }
     Iterator begin() const {
         return first_;
@@ -14,7 +19,7 @@ public:
     Iterator end() const {
         return last_;
     }
-    size_t size() const {
+    [[nodiscard]] size_t size() const {
         return size_;
     }
 private:
@@ -46,7 +51,7 @@ public:
     auto end() const {
         return pages_.end();
     }
-    size_t size() const {
+    [[nodiscard]] size_t size() const {
         return pages_.size();
     }
 private:

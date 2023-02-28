@@ -1,6 +1,9 @@
 #pragma once
 #include <iostream>
 
+/*
+ * Possible errors: unused variables in enum class DocumentStatus
+ */
 struct Document {
     Document() = default;
     Document(int, double, int);
@@ -10,7 +13,7 @@ struct Document {
     int rating = 0;
 };
 
-std::ostream& operator<<(std::ostream&, const Document&);
+std::ostream& operator<<(std::ostream& os, const Document& document);
 
 enum class DocumentStatus {
     ACTUAL,
