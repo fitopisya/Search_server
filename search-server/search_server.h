@@ -143,7 +143,8 @@ std::vector<Document> SearchServer::FindAllDocuments(const Query& query, Documen
     }
 
     std::vector<Document> matched_documents;
-    for (const auto [document_id, relevance] : document_to_relevance) {
+    matched_documents.reserve(document_to_relevance.size());
+for (const auto [document_id, relevance] : document_to_relevance) {
         matched_documents.emplace_back( document_id, relevance, documents_.at(document_id).rating );
     }
     return matched_documents;

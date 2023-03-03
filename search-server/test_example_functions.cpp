@@ -9,18 +9,6 @@ void AddDocument(SearchServer& search_server, int document_id, const std::string
     }
 }
 
-void FindTopDocuments(const SearchServer& search_server, const std::string& raw_query) {
-    std::cout << "Query : "s << raw_query << std::endl;
-    try {
-        for (const Document& document : search_server.FindTopDocuments(raw_query)) {
-            PrintDocument(document);
-        }
-    }
-    catch (const std::exception& e) {
-        std::cout << "Something went wrong: "s << e.what() << std::endl;
-    }
-}
-
 void MatchDocuments(const SearchServer& search_server, const std::string& query) {
     try {
         std::cout << "Matched document with query: "s << query << std::endl;

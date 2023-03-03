@@ -41,4 +41,5 @@ int main() {
     cout << "Before duplicates removed: "s << search_server.GetDocumentCount() << endl;
     RemoveDuplicates(search_server);
     cout << "After duplicates removed: "s << search_server.GetDocumentCount() << endl;
+    MatchDocuments(search_server, "nasty rat hair");
 }
