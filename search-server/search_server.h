@@ -106,7 +106,7 @@ std::vector<Document> SearchServer::FindTopDocuments(const std::string& raw_quer
              const double EPSILON = 1e-6;
              if (std::abs(lhs.relevance - rhs.relevance) < EPSILON) {
                  return lhs.rating > rhs.rating;
-             }
+             } return lhs.relevance > rhs.relevance;
          });
     if (matched_documents.size() > MAX_RESULT_DOCUMENT_COUNT) {
         matched_documents.resize(MAX_RESULT_DOCUMENT_COUNT);
