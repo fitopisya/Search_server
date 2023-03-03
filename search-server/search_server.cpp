@@ -83,10 +83,12 @@ const std::map<std::string, double>& SearchServer::GetWordFrequencies(int docume
 void SearchServer::RemoveDocument(int document_id) {
     if (document_to_word_freqs_.count(document_id)) {
         std::map<std::string, double> search_doc = document_to_word_freqs_[document_id];
-        std::map<int, double> docs = {};
+        std::string map_key;
         for (auto [key, value] : search_doc) {
             word_to_document_freqs_[key].erase(document_id);
+            map_key = key;
         }
+        word_to_document_freqs_.erase(map_key);
         document_to_word_freqs_.erase(document_id);
         documents_.erase(document_id);
         document_ids_.erase(document_id);
