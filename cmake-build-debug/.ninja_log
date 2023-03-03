@@ -34,3 +34,12 @@
 382	418	1677871152480358651	search_server	54e82f823e57b956
 2	386	1677871163677256924	CMakeFiles/search_server.dir/search-server/remove_duplicates.cpp.o	eb8d88fc35fccdcc
 386	422	1677871163715092592	search_server	54e82f823e57b956
+1	554	1677872221764431974	CMakeFiles/search_server.dir/search-server/main.cpp.o	f619ce5beffcd412
+1	688	1677872221912219071	CMakeFiles/search_server.dir/search-server/search_server.cpp.o	c5a55fae23d8baa7
+688	743	1677872221970388763	search_server	54e82f823e57b956
+2	500	1677872289427541284	CMakeFiles/search_server.dir/search-server/search_server.cpp.o	c5a55fae23d8baa7
+500	536	1677872289465738781	search_server	54e82f823e57b956
+1	506	1677872379791189548	CMakeFiles/search_server.dir/search-server/search_server.cpp.o	c5a55fae23d8baa7
+506	542	1677872379829162920	search_server	54e82f823e57b956
+2	711	1677873237295512422	CMakeFiles/search_server.dir/search-server/search_server.cpp.o	c5a55fae23d8baa7
+712	761	1677873237347010215	search_server	54e82f823e57b956
