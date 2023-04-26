@@ -18,3 +18,4 @@ int RequestQueue::GetNoResultRequests() const {
         }
     } return empty_result;
 }
+
