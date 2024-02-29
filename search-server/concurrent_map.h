@@ -8,7 +8,7 @@ using namespace std::string_literals;
 
 template <typename Key, typename Value>
 class ConcurrentMap {
-private:
+private: 
     struct Bucket {
         std::mutex mutex;
         std::map<Key, Value> map;
