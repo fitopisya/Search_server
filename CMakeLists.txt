@@ -4,7 +4,7 @@ project(search_server)
 set(CMAKE_CXX_STANDARD 17)
 
 include_directories(search-server)
-
+ 
 add_executable(search_server
         search-server/document.cpp
         search-server/document.h
